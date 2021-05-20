@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "ingresos-egresos-cb497": {
+      "hosting": {
+        "ingresoEgreso": [
+          "ingresos-egresos-cb497"
+        ]
+      }
+    }
+  }
+}
