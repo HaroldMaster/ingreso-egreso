@@ -18,10 +18,19 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
+//firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
+
+//ngrx
+import {StoreModule} from '@ngrx/store'
+import {EffectsModule} from '@ngrx/effects'
+import { appReducers } from './app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { UiEffects } from './shared/ui.effects';
+import { AuthEffects } from './auth/state/auth.effect';
 
 @NgModule({
   declarations: [
@@ -42,7 +51,10 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([UiEffects, AuthEffects]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
 import {map} from 'rxjs/operators'
+import { actionLogin } from '../auth/state/auth.actions';
 import { Usuario } from '../models/users.model';
 
 @Injectable({
@@ -9,7 +11,7 @@ import { Usuario } from '../models/users.model';
 })
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth, private fireStore: AngularFirestore) { }
+  constructor(public auth: AngularFireAuth, private fireStore: AngularFirestore, private store: Store) { }
 
   crearUsuario(nombre: string, email:string, password:string){
     console.log('n', nombre, 'e', email, 'p', password)
@@ -40,6 +42,11 @@ export class AuthService {
     return this.auth.authState.pipe(
       map(fireUser => fireUser != null )
     )
+  }
+
+  dispatchLogin(email: string, password: string): void {
+    console.log('dispatch login action');
+    this.store.dispatch(actionLogin({payload: {email, password}}));
   }
 }
 
